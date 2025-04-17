@@ -147,9 +147,85 @@ export default function Step2() {
           <label>Notes:</label>
           <textarea value={room.notes} onChange={(e) => handleChange(index, null, 'notes', e.target.value)} style={{ width: '100%' }} /><br />
 
-          <fieldset style={{ marginTop: '1rem', backgroundColor: '#f9f9f9', padding: '1rem', borderRadius: '8px' }}>
-            <legend><strong>✅ All room logic fields loaded.</strong></legend>
-            <p>This confirms that all data structures for the room are correctly initialized and ready for rendering.</p>
+          {/* Full Trade Sections Start Here */}
+
+          <fieldset style={{ marginTop: '1rem' }}>
+            <legend>🪵 Flooring</legend>
+            Type: <input value={room.flooring.type} onChange={(e) => handleChange(index, 'flooring', 'type', e.target.value)} />
+            Area (sq ft): <input value={room.flooring.area} onChange={(e) => handleChange(index, 'flooring', 'area', e.target.value)} />
+          </fieldset>
+
+          <fieldset style={{ marginTop: '1rem' }}>
+            <legend🧱 Tile</legend>
+            <label><input type="checkbox" checked={room.tile.hasTubTile} onChange={(e) => handleChange(index, 'tile', 'hasTubTile', e.target.checked)} /> Tub Tile</label>
+            <label><input type="checkbox" checked={room.tile.hasBacksplash} onChange={(e) => handleChange(index, 'tile', 'hasBacksplash', e.target.checked)} /> Backsplash</label>
+            Edge: <input value={room.tile.edge} onChange={(e) => handleChange(index, 'tile', 'edge', e.target.value)} />
+            Tile Color: <input value={room.tile.tileColor} onChange={(e) => handleChange(index, 'tile', 'tileColor', e.target.value)} />
+            Edge Color: <input value={room.tile.edgeColor} onChange={(e) => handleChange(index, 'tile', 'edgeColor', e.target.value)} />
+            Edge Size: <input value={room.tile.edgeSize} onChange={(e) => handleChange(index, 'tile', 'edgeSize', e.target.value)} />
+            Grout: <input value={room.tile.grout} onChange={(e) => handleChange(index, 'tile', 'grout', e.target.value)} />
+            <label><input type="checkbox" checked={room.tile.groutSealer} onChange={(e) => handleChange(index, 'tile', 'groutSealer', e.target.checked)} /> Grout Sealer</label>
+          </fieldset>
+
+          <fieldset style={{ marginTop: '1rem' }}>
+            <legend>🎨 Painting</legend>
+            {['ceiling', 'walls', 'baseCase', 'cabinets', 'sealerRequired'].map((key) => (
+              <label key={key}><input type="checkbox" checked={room.painting[key]} onChange={(e) => handleChange(index, 'painting', key, e.target.checked)} /> {key.charAt(0).toUpperCase() + key.slice(1)}</label>
+            ))}
+          </fieldset>
+
+          <fieldset style={{ marginTop: '1rem' }}>
+            <legend>🪚 Base & Case (Material)</legend>
+            <label><input type="checkbox" checked={room.baseAndCase.paint} onChange={(e) => handleChange(index, 'baseAndCase', 'paint', e.target.checked)} /> Paint</label>
+            <label><input type="checkbox" checked={room.baseAndCase.replace} onChange={(e) => handleChange(index, 'baseAndCase', 'replace', e.target.checked)} /> Replace</label>
+            Linear Feet: <input value={room.baseAndCase.linearFeet} onChange={(e) => handleChange(index, 'baseAndCase', 'linearFeet', e.target.value)} />
+            Material: <input value={room.baseAndCase.material} onChange={(e) => handleChange(index, 'baseAndCase', 'material', e.target.value)} />
+          </fieldset>
+
+          <fieldset style={{ marginTop: '1rem' }}>
+            <legend>🧱 Drywall</legend>
+            Ceiling Type: <input value={room.drywall.ceilingType} onChange={(e) => handleChange(index, 'drywall', 'ceilingType', e.target.value)} />
+            {['drywallPatches', 'moldDrywall', 'insulation', 'deleteIntercom', 'backingRequired'].map((key) => (
+              <label key={key}><input type="checkbox" checked={room.drywall[key]} onChange={(e) => handleChange(index, 'drywall', key, e.target.checked)} /> {key}</label>
+            ))}
+          </fieldset>
+
+          <fieldset style={{ marginTop: '1rem' }}>
+            <legend>💡 Electrical</legend>
+            Outlets: <input value={room.electrical.outlets} onChange={(e) => handleChange(index, 'electrical', 'outlets', e.target.value)} />
+            Switches: <input value={room.electrical.switches} onChange={(e) => handleChange(index, 'electrical', 'switches', e.target.value)} />
+            Switch Type: <input value={room.electrical.switchType} onChange={(e) => handleChange(index, 'electrical', 'switchType', e.target.value)} />
+            <label><input type="checkbox" checked={room.electrical.smokeDetector} onChange={(e) => handleChange(index, 'electrical', 'smokeDetector', e.target.checked)} /> Smoke Detector</label>
+            GFCI: <input value={room.electrical.gfci} onChange={(e) => handleChange(index, 'electrical', 'gfci', e.target.value)} />
+            Light Fixtures: <input value={room.electrical.lightFixtures} onChange={(e) => handleChange(index, 'electrical', 'lightFixtures', e.target.value)} />
+          </fieldset>
+
+          <fieldset style={{ marginTop: '1rem' }}>
+            <legend>🪟 Cabinets</legend>
+            Upper Qty: <input value={room.cabinets.upperQty} onChange={(e) => handleChange(index, 'cabinets', 'upperQty', e.target.value)} />
+            Lower Qty: <input value={room.cabinets.lowerQty} onChange={(e) => handleChange(index, 'cabinets', 'lowerQty', e.target.value)} />
+            Linear Feet: <input value={room.cabinets.linearFeet} onChange={(e) => handleChange(index, 'cabinets', 'linearFeet', e.target.value)} />
+            Gable Ends: <input value={room.cabinets.gableEnds} onChange={(e) => handleChange(index, 'cabinets', 'gableEnds', e.target.value)} />
+            Vanity Qty: <input value={room.cabinets.vanityQty} onChange={(e) => handleChange(index, 'cabinets', 'vanityQty', e.target.value)} />
+            Vanity Size: <input value={room.cabinets.vanitySize} onChange={(e) => handleChange(index, 'cabinets', 'vanitySize', e.target.value)} />
+          </fieldset>
+
+          <fieldset style={{ marginTop: '1rem' }}>
+            <legend>🪵 Countertops</legend>
+            Square Feet: <input value={room.countertops.sqft} onChange={(e) => handleChange(index, 'countertops', 'sqft', e.target.value)} />
+            Type: <input value={room.countertops.type} onChange={(e) => handleChange(index, 'countertops', 'type', e.target.value)} />
+          </fieldset>
+
+          <fieldset style={{ marginTop: '1rem' }}>
+            <legend>🚿 Plumbing</legend>
+            <label><input type="checkbox" checked={room.plumbing.tub} onChange={(e) => handleChange(index, 'plumbing', 'tub', e.target.checked)} /> Tub</label>
+            Direction: <input value={room.plumbing.tubDirection} onChange={(e) => handleChange(index, 'plumbing', 'tubDirection', e.target.value)} />
+            Size: <input value={room.plumbing.tubSize} onChange={(e) => handleChange(index, 'plumbing', 'tubSize', e.target.value)} />
+            {['showerRod', 'toilet', 'sink', 'shutOffs', 'absFittings', 'copperPipe', 'absPipe', 'pTrap', 'pTrapCleanout'].map((key) => (
+              <label key={key}><input type="checkbox" checked={room.plumbing[key]} onChange={(e) => handleChange(index, 'plumbing', key, e.target.checked)} /> {key}</label>
+            ))}
+            <br />Plumbing Notes:
+            <textarea value={room.plumbing.plumbingNotes} onChange={(e) => handleChange(index, 'plumbing', 'plumbingNotes', e.target.value)} />
           </fieldset>
         </div>
       ))}
@@ -158,3 +234,4 @@ export default function Step2() {
     </div>
   );
 }
+
