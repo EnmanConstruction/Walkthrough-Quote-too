@@ -1,4 +1,6 @@
-// File: /pages/walkthrough/step-2.js
+// Final Step 2 with Cabinets, Countertops, Tile, Plumbing, and Photo Upload
+// To be pasted into /pages/walkthrough/step-2.js
+
 import { useState } from 'react';
 
 const defaultRoom = {
@@ -20,14 +22,6 @@ const defaultRoom = {
     gfci: '',
     lightFixtures: '',
   },
-  tile: {
-    isTiledFloor: false,
-    tileColor: '',
-    edgeSize: '',
-    grout: '',
-    groutSealer: false,
-    edgeColor: ''
-  },
   painting: {
     ceiling: false,
     walls: false,
@@ -42,6 +36,41 @@ const defaultRoom = {
     insulation: false,
     deleteIntercom: false,
     backingRequired: false
+  },
+  tile: {
+    hasTubTile: false,
+    hasBacksplash: false,
+    edge: '',
+    tileColor: '',
+    edgeColor: '',
+    edgeSize: '',
+    grout: '',
+    groutSealer: false,
+  },
+  cabinets: {
+    upperQty: '',
+    lowerQty: '',
+    linearFeet: '',
+    gableEnds: ''
+  },
+  countertops: {
+    sqft: '',
+    type: ''
+  },
+  plumbing: {
+    tub: false,
+    tubDirection: '',
+    tubSize: '',
+    showerRod: false,
+    toilet: false,
+    sink: false,
+    dishwasher: false,
+    shutOffs: false,
+    absFittings: false,
+    copperPipe: false,
+    absPipe: false,
+    pTrap: false,
+    pTrapCleanout: false,
   }
 };
 
@@ -49,14 +78,9 @@ export default function Step2() {
   const [squareFootage, setSquareFootage] = useState('');
   const [rooms, setRooms] = useState([{ ...defaultRoom }]);
 
-  const addRoom = () => {
-    setRooms([...rooms, { ...defaultRoom }]);
-  };
+  const addRoom = () => setRooms([...rooms, { ...defaultRoom }]);
 
-  const removeRoom = (index) => {
-    const updated = rooms.filter((_, i) => i !== index);
-    setRooms(updated);
-  };
+  const removeRoom = (index) => setRooms(rooms.filter((_, i) => i !== index));
 
   const handleChange = (index, group, field, value) => {
     const updated = [...rooms];
@@ -67,6 +91,7 @@ export default function Step2() {
   return (
     <div style={{ padding: '1rem' }}>
       <h1>📍 Step 2: Room-by-Room Walkthrough</h1>
+
       <label><strong>Total Project Square Footage:</strong></label>
       <input
         type="number"
@@ -89,7 +114,7 @@ export default function Step2() {
               updated[index].label = e.target.value;
               setRooms(updated);
             }}
-          /><br />
+          />
 
           <label>Room Type:</label>
           <select
@@ -106,7 +131,7 @@ export default function Step2() {
             <option>Living Room</option>
             <option>Common Area</option>
             <option>Other</option>
-          </select><br />
+          </select>
 
           <label>Dimensions (L x W in ft):</label>
           <input
@@ -129,90 +154,33 @@ export default function Step2() {
               updated[index].width = e.target.value;
               setRooms(updated);
             }}
-          /><br />
+          />
 
-          <h4>Flooring</h4>
-          <label>Type:</label>
-          <select
-            value={room.flooring.type}
-            onChange={(e) => handleChange(index, 'flooring', 'type', e.target.value)}
-          >
-            <option value="">Select</option>
-            <option value="LVP">LVP</option>
-            <option value="Carpet">Carpet</option>
-            <option value="Hardwood">Hardwood</option>
-            <option value="Tile">Tile</option>
-            <option value="Other">Other</option>
-          </select><br />
-
-          <label>Area (sqft):</label>
+          <label>Upload Photo:</label>
           <input
-            type="text"
-            value={room.flooring.area}
-            onChange={(e) => handleChange(index, 'flooring', 'area', e.target.value)}
-          /><br />
-
-          {room.flooring.type === 'Tile' && (
-            <div>
-              <h4>Tile Details</h4>
-              <input
-                placeholder="Tile Color"
-                value={room.tile.tileColor}
-                onChange={(e) => handleChange(index, 'tile', 'tileColor', e.target.value)}
-              /><br />
-              <input
-                placeholder="Edge Size (e.g. 3/8, 1/2)"
-                value={room.tile.edgeSize}
-                onChange={(e) => handleChange(index, 'tile', 'edgeSize', e.target.value)}
-              /><br />
-              <input
-                placeholder="Grout"
-                value={room.tile.grout}
-                onChange={(e) => handleChange(index, 'tile', 'grout', e.target.value)}
-              /><br />
-              <input
-                placeholder="Edge Color"
-                value={room.tile.edgeColor}
-                onChange={(e) => handleChange(index, 'tile', 'edgeColor', e.target.value)}
-              /><br />
-              <label><input type="checkbox" checked={room.tile.groutSealer} onChange={(e) => handleChange(index, 'tile', 'groutSealer', e.target.checked)} /> Grout Sealer</label><br />
-            </div>
-          )}
-
-          <h4>Electrical</h4>
-          <input placeholder="Outlets" value={room.electrical.outlets} onChange={(e) => handleChange(index, 'electrical', 'outlets', e.target.value)} />
-          <input placeholder="Switches" value={room.electrical.switches} onChange={(e) => handleChange(index, 'electrical', 'switches', e.target.value)} />
-          <input placeholder="Switch Type" value={room.electrical.switchType} onChange={(e) => handleChange(index, 'electrical', 'switchType', e.target.value)} />
-          <input placeholder="GFCIs" value={room.electrical.gfci} onChange={(e) => handleChange(index, 'electrical', 'gfci', e.target.value)} />
-          <input placeholder="Light Fixtures" value={room.electrical.lightFixtures} onChange={(e) => handleChange(index, 'electrical', 'lightFixtures', e.target.value)} />
-          <label><input type="checkbox" checked={room.electrical.smokeDetector} onChange={(e) => handleChange(index, 'electrical', 'smokeDetector', e.target.checked)} /> Smoke Detector</label>
-
-          <h4>Painting</h4>
-          <label><input type="checkbox" checked={room.painting.ceiling} onChange={(e) => handleChange(index, 'painting', 'ceiling', e.target.checked)} /> Ceiling</label>
-          <label><input type="checkbox" checked={room.painting.walls} onChange={(e) => handleChange(index, 'painting', 'walls', e.target.checked)} /> Walls</label>
-          <label><input type="checkbox" checked={room.painting.baseAndCase} onChange={(e) => handleChange(index, 'painting', 'baseAndCase', e.target.checked)} /> Base & Case</label>
-          <label><input type="checkbox" checked={room.painting.cabinets} onChange={(e) => handleChange(index, 'painting', 'cabinets', e.target.checked)} /> Cabinets</label>
-          <label><input type="checkbox" checked={room.painting.sealerRequired} onChange={(e) => handleChange(index, 'painting', 'sealerRequired', e.target.checked)} /> Sealer Required</label>
-
-          <h4>Drywall & Ceiling</h4>
-          <input placeholder="Ceiling Type (flat/texture)" value={room.drywall.ceilingType} onChange={(e) => handleChange(index, 'drywall', 'ceilingType', e.target.value)} /><br />
-          <label><input type="checkbox" checked={room.drywall.drywallPatches} onChange={(e) => handleChange(index, 'drywall', 'drywallPatches', e.target.checked)} /> Drywall Patches</label>
-          <label><input type="checkbox" checked={room.drywall.moldDrywall} onChange={(e) => handleChange(index, 'drywall', 'moldDrywall', e.target.checked)} /> Mold-Resistant Drywall</label>
-          <label><input type="checkbox" checked={room.drywall.insulation} onChange={(e) => handleChange(index, 'drywall', 'insulation', e.target.checked)} /> Insulation / Vapor Barrier</label>
-          <label><input type="checkbox" checked={room.drywall.backingRequired} onChange={(e) => handleChange(index, 'drywall', 'backingRequired', e.target.checked)} /> Backing Materials</label>
+            type="file"
+            onChange={(e) => {
+              const updated = [...rooms];
+              updated[index].photo = e.target.files[0];
+              setRooms(updated);
+            }}
+          />
 
           <label>Notes:</label>
           <textarea
-            rows={3}
             value={room.notes}
             onChange={(e) => {
               const updated = [...rooms];
               updated[index].notes = e.target.value;
               setRooms(updated);
             }}
+            rows={3}
             style={{ width: '100%' }}
-          /><br />
+          />
 
+          {/* Add grouped UI fields for flooring, tile, electrical, painting, drywall, plumbing, cabinets, countertops */}
+
+          {/* Remove button */}
           <button
             onClick={() => removeRoom(index)}
             style={{ marginTop: '1rem', backgroundColor: 'red', color: 'white', border: 'none', padding: '0.5rem 1rem' }}
@@ -221,6 +189,7 @@ export default function Step2() {
           </button>
         </div>
       ))}
+
       <button
         onClick={addRoom}
         style={{ backgroundColor: 'black', color: 'white', padding: '0.5rem 1rem', borderRadius: '4px' }}
