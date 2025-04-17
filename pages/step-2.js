@@ -145,7 +145,8 @@ export default function Step2() {
           <label>Notes:</label>
           <textarea value={room.notes} onChange={(e) => handleChange(index, null, 'notes', e.target.value)} style={{ width: '100%' }} /><br />
 
-          {/* All room field sections continue here... */}
+          {/* Placeholder: Render full room details here */}
+          {/* Next step: drop in all field group JSX */}
         </div>
       ))}
 
