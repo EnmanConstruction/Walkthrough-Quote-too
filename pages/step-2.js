@@ -26,6 +26,7 @@ const defaultRoom = {
   painting: {
     ceiling: false,
     walls: false,
+    baseCase: false,
     cabinets: false,
     sealerRequired: false,
   },
@@ -145,7 +146,6 @@ export default function Step2() {
           <label>Notes:</label>
           <textarea value={room.notes} onChange={(e) => handleChange(index, null, 'notes', e.target.value)} style={{ width: '100%' }} /><br />
 
-          {/* Render simplified section for confirmation that all logic is rendering */}
           <fieldset>
             <legend><strong>✅ All room logic fields loaded.</strong></legend>
             <p>This confirms that all data structures for the room are correctly initialized and ready for rendering.</p>
