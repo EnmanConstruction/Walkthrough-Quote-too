@@ -1,201 +1,79 @@
-// Final Step 2 with Cabinets, Countertops, Tile, Plumbing, and Photo Upload
-// To be pasted into /pages/walkthrough/step-2.js
+<div className="trade-section">
+  <h4>Flooring</h4>
+  <label>Type:</label>
+  <input type="text" value={room.flooring.type} onChange={(e) => handleChange(index, 'flooring', 'type', e.target.value)} />
+  <label>Area (sq ft):</label>
+  <input type="number" value={room.flooring.area} onChange={(e) => handleChange(index, 'flooring', 'area', e.target.value)} />
+</div>
 
-import { useState } from 'react';
+<div className="trade-section">
+  <h4>Tile</h4>
+  <label><input type="checkbox" checked={room.tile.hasTubTile} onChange={(e) => handleChange(index, 'tile', 'hasTubTile', e.target.checked)} /> Tub Tile</label>
+  <label><input type="checkbox" checked={room.tile.hasBacksplash} onChange={(e) => handleChange(index, 'tile', 'hasBacksplash', e.target.checked)} /> Backsplash</label>
+  <label>Edge:</label>
+  <input type="text" value={room.tile.edge} onChange={(e) => handleChange(index, 'tile', 'edge', e.target.value)} />
+  <label>Tile Color:</label>
+  <input type="text" value={room.tile.tileColor} onChange={(e) => handleChange(index, 'tile', 'tileColor', e.target.value)} />
+  <label>Edge Color:</label>
+  <input type="text" value={room.tile.edgeColor} onChange={(e) => handleChange(index, 'tile', 'edgeColor', e.target.value)} />
+  <label>Edge Size:</label>
+  <input type="text" value={room.tile.edgeSize} onChange={(e) => handleChange(index, 'tile', 'edgeSize', e.target.value)} />
+  <label>Grout:</label>
+  <input type="text" value={room.tile.grout} onChange={(e) => handleChange(index, 'tile', 'grout', e.target.value)} />
+  <label><input type="checkbox" checked={room.tile.groutSealer} onChange={(e) => handleChange(index, 'tile', 'groutSealer', e.target.checked)} /> Grout Sealer</label>
+</div>
 
-const defaultRoom = {
-  label: '',
-  type: 'Bathroom',
-  length: '',
-  width: '',
-  photo: null,
-  notes: '',
-  flooring: {
-    type: '',
-    area: ''
-  },
-  electrical: {
-    outlets: '',
-    switches: '',
-    switchType: '',
-    smokeDetector: false,
-    gfci: '',
-    lightFixtures: '',
-  },
-  painting: {
-    ceiling: false,
-    walls: false,
-    baseAndCase: false,
-    cabinets: false,
-    sealerRequired: false,
-  },
-  drywall: {
-    ceilingType: '',
-    drywallPatches: false,
-    moldDrywall: false,
-    insulation: false,
-    deleteIntercom: false,
-    backingRequired: false
-  },
-  tile: {
-    hasTubTile: false,
-    hasBacksplash: false,
-    edge: '',
-    tileColor: '',
-    edgeColor: '',
-    edgeSize: '',
-    grout: '',
-    groutSealer: false,
-  },
-  cabinets: {
-    upperQty: '',
-    lowerQty: '',
-    linearFeet: '',
-    gableEnds: ''
-  },
-  countertops: {
-    sqft: '',
-    type: ''
-  },
-  plumbing: {
-    tub: false,
-    tubDirection: '',
-    tubSize: '',
-    showerRod: false,
-    toilet: false,
-    sink: false,
-    dishwasher: false,
-    shutOffs: false,
-    absFittings: false,
-    copperPipe: false,
-    absPipe: false,
-    pTrap: false,
-    pTrapCleanout: false,
-  }
-};
+<div className="trade-section">
+  <h4>Painting</h4>
+  <label><input type="checkbox" checked={room.painting.ceiling} onChange={(e) => handleChange(index, 'painting', 'ceiling', e.target.checked)} /> Ceiling</label>
+  <label><input type="checkbox" checked={room.painting.walls} onChange={(e) => handleChange(index, 'painting', 'walls', e.target.checked)} /> Walls</label>
+  <label><input type="checkbox" checked={room.painting.baseAndCase} onChange={(e) => handleChange(index, 'painting', 'baseAndCase', e.target.checked)} /> Base & Case</label>
+  <label><input type="checkbox" checked={room.painting.cabinets} onChange={(e) => handleChange(index, 'painting', 'cabinets', e.target.checked)} /> Cabinets</label>
+  <label><input type="checkbox" checked={room.painting.sealerRequired} onChange={(e) => handleChange(index, 'painting', 'sealerRequired', e.target.checked)} /> Sealer Required</label>
+</div>
 
-export default function Step2() {
-  const [squareFootage, setSquareFootage] = useState('');
-  const [rooms, setRooms] = useState([{ ...defaultRoom }]);
+<div className="trade-section">
+  <h4>Drywall</h4>
+  <label>Ceiling Type:</label>
+  <input type="text" value={room.drywall.ceilingType} onChange={(e) => handleChange(index, 'drywall', 'ceilingType', e.target.value)} />
+  <label><input type="checkbox" checked={room.drywall.drywallPatches} onChange={(e) => handleChange(index, 'drywall', 'drywallPatches', e.target.checked)} /> Drywall Patches</label>
+  <label><input type="checkbox" checked={room.drywall.moldDrywall} onChange={(e) => handleChange(index, 'drywall', 'moldDrywall', e.target.checked)} /> Mold-Resistant Drywall</label>
+  <label><input type="checkbox" checked={room.drywall.insulation} onChange={(e) => handleChange(index, 'drywall', 'insulation', e.target.checked)} /> Insulation</label>
+  <label><input type="checkbox" checked={room.drywall.deleteIntercom} onChange={(e) => handleChange(index, 'drywall', 'deleteIntercom', e.target.checked)} /> Delete Intercom</label>
+  <label><input type="checkbox" checked={room.drywall.backingRequired} onChange={(e) => handleChange(index, 'drywall', 'backingRequired', e.target.checked)} /> Backing Required</label>
+</div>
 
-  const addRoom = () => setRooms([...rooms, { ...defaultRoom }]);
+<div className="trade-section">
+  <h4>Electrical</h4>
+  <label>Outlets:</label>
+  <input type="text" value={room.electrical.outlets} onChange={(e) => handleChange(index, 'electrical', 'outlets', e.target.value)} />
+  <label>Switches:</label>
+  <input type="text" value={room.electrical.switches} onChange={(e) => handleChange(index, 'electrical', 'switches', e.target.value)} />
+  <label>Switch Type:</label>
+  <input type="text" value={room.electrical.switchType} onChange={(e) => handleChange(index, 'electrical', 'switchType', e.target.value)} />
+  <label><input type="checkbox" checked={room.electrical.smokeDetector} onChange={(e) => handleChange(index, 'electrical', 'smokeDetector', e.target.checked)} /> Smoke Detector</label>
+  <label>GFCI:</label>
+  <input type="text" value={room.electrical.gfci} onChange={(e) => handleChange(index, 'electrical', 'gfci', e.target.value)} />
+  <label>Light Fixtures:</label>
+  <input type="text" value={room.electrical.lightFixtures} onChange={(e) => handleChange(index, 'electrical', 'lightFixtures', e.target.value)} />
+</div>
 
-  const removeRoom = (index) => setRooms(rooms.filter((_, i) => i !== index));
+<div className="trade-section">
+  <h4>Cabinets</h4>
+  <label>Upper Qty:</label>
+  <input type="text" value={room.cabinets.upperQty} onChange={(e) => handleChange(index, 'cabinets', 'upperQty', e.target.value)} />
+  <label>Lower Qty:</label>
+  <input type="text" value={room.cabinets.lowerQty} onChange={(e) => handleChange(index, 'cabinets', 'lowerQty', e.target.value)} />
+  <label>Linear Feet:</label>
+  <input type="text" value={room.cabinets.linearFeet} onChange={(e) => handleChange(index, 'cabinets', 'linearFeet', e.target.value)} />
+  <label>Gable Ends:</label>
+  <input type="text" value={room.cabinets.gableEnds} onChange={(e) => handleChange(index, 'cabinets', 'gableEnds', e.target.value)} />
+</div>
 
-  const handleChange = (index, group, field, value) => {
-    const updated = [...rooms];
-    updated[index][group][field] = value;
-    setRooms(updated);
-  };
-
-  return (
-    <div style={{ padding: '1rem' }}>
-      <h1>📍 Step 2: Room-by-Room Walkthrough</h1>
-
-      <label><strong>Total Project Square Footage:</strong></label>
-      <input
-        type="number"
-        placeholder="e.g. 1200"
-        value={squareFootage}
-        onChange={(e) => setSquareFootage(e.target.value)}
-        style={{ marginBottom: '1rem', width: '100%' }}
-      />
-
-      {rooms.map((room, index) => (
-        <div key={index} style={{ marginBottom: '2rem', padding: '1rem', border: '1px solid #ccc', borderRadius: '8px' }}>
-          <h2>{room.label || `Room ${index + 1}`}</h2>
-
-          <label>Room Label:</label>
-          <input
-            type="text"
-            value={room.label}
-            onChange={(e) => {
-              const updated = [...rooms];
-              updated[index].label = e.target.value;
-              setRooms(updated);
-            }}
-          />
-
-          <label>Room Type:</label>
-          <select
-            value={room.type}
-            onChange={(e) => {
-              const updated = [...rooms];
-              updated[index].type = e.target.value;
-              setRooms(updated);
-            }}
-          >
-            <option>Bathroom</option>
-            <option>Kitchen</option>
-            <option>Bedroom</option>
-            <option>Living Room</option>
-            <option>Common Area</option>
-            <option>Other</option>
-          </select>
-
-          <label>Dimensions (L x W in ft):</label>
-          <input
-            type="text"
-            placeholder="Length"
-            value={room.length}
-            onChange={(e) => {
-              const updated = [...rooms];
-              updated[index].length = e.target.value;
-              setRooms(updated);
-            }}
-          />
-          {' x '}
-          <input
-            type="text"
-            placeholder="Width"
-            value={room.width}
-            onChange={(e) => {
-              const updated = [...rooms];
-              updated[index].width = e.target.value;
-              setRooms(updated);
-            }}
-          />
-
-          <label>Upload Photo:</label>
-          <input
-            type="file"
-            onChange={(e) => {
-              const updated = [...rooms];
-              updated[index].photo = e.target.files[0];
-              setRooms(updated);
-            }}
-          />
-
-          <label>Notes:</label>
-          <textarea
-            value={room.notes}
-            onChange={(e) => {
-              const updated = [...rooms];
-              updated[index].notes = e.target.value;
-              setRooms(updated);
-            }}
-            rows={3}
-            style={{ width: '100%' }}
-          />
-
-          {/* Add grouped UI fields for flooring, tile, electrical, painting, drywall, plumbing, cabinets, countertops */}
-
-          {/* Remove button */}
-          <button
-            onClick={() => removeRoom(index)}
-            style={{ marginTop: '1rem', backgroundColor: 'red', color: 'white', border: 'none', padding: '0.5rem 1rem' }}
-          >
-            Remove Room
-          </button>
-        </div>
-      ))}
-
-      <button
-        onClick={addRoom}
-        style={{ backgroundColor: 'black', color: 'white', padding: '0.5rem 1rem', borderRadius: '4px' }}
-      >
-        + Add Another Room
-      </button>
-    </div>
-  );
-}
+<div className="trade-section">
+  <h4>Countertops</h4>
+  <label>Square Feet:</label>
+  <input type="text" value={room.countertops.sqft} onChange={(e) => handleChange(index, 'countertops', 'sqft', e.target.value)} />
+  <label>Type:</label>
+  <input type="text" value={room.countertops.type} onChange={(e) => handleChange(index, 'countertops', 'type', e.target.value)} />
+</div>
