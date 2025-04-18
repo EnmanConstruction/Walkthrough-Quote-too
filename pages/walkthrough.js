@@ -33,7 +33,7 @@ const defaultRoom = {
   },
 };
 
-export default function Step2() {
+export default function Walkthrough() {
   const [rooms, setRooms] = useState([defaultRoom]);
   const [totalSqft, setTotalSqft] = useState('');
 
