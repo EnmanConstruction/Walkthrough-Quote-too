@@ -31,7 +31,7 @@ const defaultRoom = {
     tub: false, tubDirection: '', tubSize: '', showerRod: false, toilet: false, sink: false,
     absFittings: false, copperPipe: false, shutOffs: false, absPipe: false, pTrap: false, pTrapCleanout: false, plumbingNotes: '',
   },
-  materials: [],
+  materials: []
 };
 
 export default function Walkthrough() {
@@ -59,7 +59,8 @@ export default function Walkthrough() {
       <label className="block font-semibold mb-1">Total Project Square Footage:</label>
       <input
         className="w-full p-2 border rounded mb-6"
-        type="text"
+        type="number"
+        min="0"
         placeholder="e.g. 1200"
         value={totalSqft}
         onChange={(e) => setTotalSqft(e.target.value)}
@@ -106,12 +107,16 @@ export default function Walkthrough() {
               <div className="flex gap-2">
                 <input
                   className="w-1/2 p-2 border rounded"
+                  type="number"
+                  min="0"
                   value={room.length}
                   placeholder="Length"
                   onChange={(e) => handleChange(index, null, 'length', e.target.value)}
                 />
                 <input
                   className="w-1/2 p-2 border rounded"
+                  type="number"
+                  min="0"
                   value={room.width}
                   placeholder="Width"
                   onChange={(e) => handleChange(index, null, 'width', e.target.value)}
@@ -160,10 +165,10 @@ export default function Walkthrough() {
         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold"
       >+ Add Another Room</button>
 
-      <div className="mt-8 text-sm text-gray-600">
+      <div className="mt-8">
         <details>
           <summary className="cursor-pointer font-semibold">🔍 Developer Preview (JSON Output)</summary>
-          <pre className="whitespace-pre-wrap mt-2 bg-gray-100 p-4 rounded border">
+          <pre className="mt-4 bg-gray-100 p-4 rounded text-sm overflow-auto">
             {JSON.stringify({ totalSqft, rooms }, null, 2)}
           </pre>
         </details>
