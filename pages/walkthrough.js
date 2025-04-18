@@ -9,67 +9,27 @@ const defaultRoom = {
   notes: '',
   flooring: { type: '', area: '' },
   tile: {
-    hasTubTile: false,
-    hasBacksplash: false,
-    edge: '',
-    tileColor: '',
-    edgeColor: '',
-    edgeSize: '',
-    grout: '',
-    groutSealer: false,
+    hasTubTile: false, hasBacksplash: false, edge: '', tileColor: '', edgeColor: '', edgeSize: '', grout: '', groutSealer: false,
   },
   painting: {
-    ceiling: false,
-    walls: false,
-    baseCase: false,
-    cabinets: false,
-    sealerRequired: false,
+    ceiling: false, walls: false, baseCase: false, cabinets: false, sealerRequired: false,
   },
   baseAndCase: {
-    paint: false,
-    replace: false,
-    linearFeet: '',
-    material: '',
+    paint: false, replace: false, linearFeet: '', material: '',
   },
   drywall: {
-    ceilingType: '',
-    drywallPatches: false,
-    moldDrywall: false,
-    insulation: false,
-    deleteIntercom: false,
-    backingRequired: false,
+    ceilingType: '', drywallPatches: false, moldDrywall: false, insulation: false, deleteIntercom: false, backingRequired: false,
   },
   electrical: {
-    outlets: '',
-    switches: '',
-    switchType: '',
-    smokeDetector: false,
-    gfci: '',
-    lightFixtures: '',
+    outlets: '', switches: '', switchType: '', smokeDetector: false, gfci: '', lightFixtures: '',
   },
   cabinets: {
-    upperQty: '',
-    lowerQty: '',
-    linearFeet: '',
-    gableEnds: '',
-    vanityQty: '',
-    vanitySize: '',
+    upperQty: '', lowerQty: '', linearFeet: '', gableEnds: '', vanityQty: '', vanitySize: '',
   },
   countertops: { sqft: '', type: '' },
   plumbing: {
-    tub: false,
-    tubDirection: '',
-    tubSize: '',
-    showerRod: false,
-    toilet: false,
-    sink: false,
-    absFittings: false,
-    copperPipe: false,
-    shutOffs: false,
-    absPipe: false,
-    pTrap: false,
-    pTrapCleanout: false,
-    plumbingNotes: '',
+    tub: false, tubDirection: '', tubSize: '', showerRod: false, toilet: false, sink: false,
+    absFittings: false, copperPipe: false, shutOffs: false, absPipe: false, pTrap: false, pTrapCleanout: false, plumbingNotes: '',
   },
   materials: [],
 };
@@ -77,10 +37,12 @@ const defaultRoom = {
 export default function Walkthrough() {
   const [rooms, setRooms] = useState([defaultRoom]);
   const [totalSqft, setTotalSqft] = useState('');
-  const [showJson, setShowJson] = useState(false);
+  const [showJSON, setShowJSON] = useState(false);
 
-  const addRoom = () => setRooms([...rooms, { ...defaultRoom }] );
+  const addRoom = () => setRooms([...rooms, { ...defaultRoom }]);
   const removeRoom = (index) => setRooms(rooms.filter((_, i) => i !== index));
+  const displayRoomTitle = (index, label) => label || `Room ${index + 1}`;
+
   const handleChange = (index, section, field, value) => {
     const updated = [...rooms];
     if (section && typeof updated[index][section] === 'object') {
@@ -93,7 +55,7 @@ export default function Walkthrough() {
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Step 2: Room-by-Room Walkthrough</h1>
+      <h1 className="text-3xl font-bold mb-6">Step 2: Room-by-Room Walkthrough</h1>
 
       <label className="block font-semibold mb-1">Total Project Square Footage:</label>
       <input
@@ -106,11 +68,11 @@ export default function Walkthrough() {
 
       {rooms.map((room, index) => (
         <div key={index} className="border p-4 rounded shadow mb-6">
-          <h2 className="text-xl font-bold mb-2">Room {index + 1}</h2>
+          <h2 className="text-2xl font-bold mb-4">{displayRoomTitle(index, room.label)}</h2>
 
           <button
             onClick={() => removeRoom(index)}
-            className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded mb-2"
+            className="mb-4 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
           >Remove</button>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -139,19 +101,22 @@ export default function Walkthrough() {
               </select>
             </div>
 
-            <div className="col-span-2 flex gap-2">
-              <input
-                className="w-1/2 p-2 border rounded"
-                placeholder="Length"
-                value={room.length}
-                onChange={(e) => handleChange(index, null, 'length', e.target.value)}
-              />
-              <input
-                className="w-1/2 p-2 border rounded"
-                placeholder="Width"
-                value={room.width}
-                onChange={(e) => handleChange(index, null, 'width', e.target.value)}
-              />
+            <div className="col-span-2">
+              <label className="block font-medium">Dimensions (L x W in ft)</label>
+              <div className="flex gap-2">
+                <input
+                  className="w-1/2 p-2 border rounded"
+                  value={room.length}
+                  placeholder="Length"
+                  onChange={(e) => handleChange(index, null, 'length', e.target.value)}
+                />
+                <input
+                  className="w-1/2 p-2 border rounded"
+                  value={room.width}
+                  placeholder="Width"
+                  onChange={(e) => handleChange(index, null, 'width', e.target.value)}
+                />
+              </div>
             </div>
 
             <div className="col-span-2">
@@ -173,37 +138,34 @@ export default function Walkthrough() {
             </div>
           </div>
 
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold mb-2">Trade Summary</h3>
-            <p><strong>Flooring:</strong> {room.flooring.type || '—'} ({room.flooring.area || '0'} sqft)</p>
-            <p><strong>Painting:</strong> Walls: {room.painting.walls ? 'Yes' : '—'}, Cabinets: {room.painting.cabinets ? 'Yes' : '—'}</p>
-            <p><strong>Base & Case:</strong> {room.baseAndCase.paint || room.baseAndCase.replace ? 'Yes' : '—'}</p>
-            <p><strong>Drywall:</strong> {room.drywall.ceilingType || '—'}</p>
-            <p><strong>Electrical:</strong> {room.electrical.outlets || 0} outlets, {room.electrical.switches || 0} switches</p>
-            <p><strong>Cabinets:</strong> Uppers: {room.cabinets.upperQty || 0}, Lowers: {room.cabinets.lowerQty || 0}</p>
-            <p><strong>Countertops:</strong> {room.countertops.sqft || 0} sqft ({room.countertops.type || '—'})</p>
-            <p><strong>Plumbing:</strong> Tub: {room.plumbing.tub ? 'Yes' : '—'}, Sink: {room.plumbing.sink ? 'Yes' : '—'}, Toilet: {room.plumbing.toilet ? 'Yes' : '—'}</p>
+          <div className="mt-6">
+            <h3 className="text-xl font-semibold mb-2">Trade Summary</h3>
+            <div className="grid grid-cols-1 text-sm text-gray-800">
+              <div><strong>Flooring:</strong> {room.flooring.type || '—'} ({room.flooring.area || '0'} sqft)</div>
+              <div><strong>Painting:</strong> Walls: {room.painting.walls ? 'Yes' : '—'}, Cabinets: {room.painting.cabinets ? 'Yes' : '—'}</div>
+              <div><strong>Base & Case:</strong> {room.baseAndCase.material ? room.baseAndCase.material : '—'}</div>
+              <div><strong>Drywall:</strong> {room.drywall.ceilingType || '—'}</div>
+              <div><strong>Electrical:</strong> {room.electrical.outlets || 0} outlets, {room.electrical.switches || 0} switches</div>
+              <div><strong>Cabinets:</strong> Uppers: {room.cabinets.upperQty || 0}, Lowers: {room.cabinets.lowerQty || 0}</div>
+              <div><strong>Countertops:</strong> {room.countertops.sqft || 0} sqft ({room.countertops.type || '—'})</div>
+              <div><strong>Plumbing:</strong> Tub: {room.plumbing.tub ? 'Yes' : '—'}, Sink: {room.plumbing.sink ? 'Yes' : '—'}, Toilet: {room.plumbing.toilet ? 'Yes' : '—'}</div>
+            </div>
           </div>
         </div>
       ))}
 
       <button
         onClick={addRoom}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold"
       >+ Add Another Room</button>
 
       <div className="mt-6">
-        <button
-          onClick={() => setShowJson(!showJson)}
-          className="text-sm text-gray-600 hover:text-black"
-        >
-          {showJson ? '▼' : '▶'} 🔍 Developer Preview (JSON Output)
-        </button>
-        {showJson && (
-          <pre className="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto">
+        <details>
+          <summary className="cursor-pointer text-sm text-gray-600">🔍 Developer Preview (JSON Output)</summary>
+          <pre className="text-xs bg-gray-100 p-4 rounded mt-2 overflow-auto">
             {JSON.stringify({ totalSqft, rooms }, null, 2)}
           </pre>
-        )}
+        </details>
       </div>
     </div>
   );
