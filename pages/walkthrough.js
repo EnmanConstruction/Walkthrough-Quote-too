@@ -40,6 +40,7 @@ export default function Walkthrough() {
 
   const addRoom = () => setRooms([...rooms, JSON.parse(JSON.stringify(defaultRoom))]);
   const removeRoom = (index) => setRooms(rooms.filter((_, i) => i !== index));
+  const displayRoomTitle = (index, label) => label || `Room ${index + 1}`;
 
   const handleChange = (index, section, field, value) => {
     const updated = [...rooms];
@@ -51,10 +52,8 @@ export default function Walkthrough() {
     setRooms(updated);
   };
 
-  const displayRoomTitle = (index, label) => label || `Room ${index + 1}`;
-
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-6xl mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Step 2: Room-by-Room Walkthrough</h1>
 
       <label className="block font-semibold mb-1">Total Project Square Footage:</label>
@@ -68,12 +67,13 @@ export default function Walkthrough() {
 
       {rooms.map((room, index) => (
         <div key={index} className="border p-4 rounded shadow mb-8">
-          <h2 className="text-xl font-semibold mb-4">{displayRoomTitle(index, room.label)}</h2>
-
-          <button
-            onClick={() => removeRoom(index)}
-            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded mb-4"
-          >Remove</button>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold">{displayRoomTitle(index, room.label)}</h2>
+            <button
+              onClick={() => removeRoom(index)}
+              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+            >Remove</button>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -140,14 +140,14 @@ export default function Walkthrough() {
 
           <div className="mt-6">
             <h3 className="text-lg font-semibold mb-2">Trade Summary</h3>
-            <div className="text-sm space-y-1">
+            <div className="text-sm text-gray-800 space-y-1">
               <div><strong>Flooring:</strong> {room.flooring.type || '—'} ({room.flooring.area || '0'} sqft)</div>
               <div><strong>Painting:</strong> Walls: {room.painting.walls ? 'Yes' : '—'}, Cabinets: {room.painting.cabinets ? 'Yes' : '—'}</div>
-              <div><strong>Base &amp; Case:</strong> {room.baseAndCase.paint ? 'Paint' : '—'}</div>
+              <div><strong>Base & Case:</strong> {room.baseAndCase.paint ? 'Paint' : '—'}</div>
               <div><strong>Drywall:</strong> {room.drywall.ceilingType || '—'}</div>
-              <div><strong>Electrical:</strong> {room.electrical.outlets || 0} outlets, {room.electrical.switches || 0} switches</div>
-              <div><strong>Cabinets:</strong> Uppers: {room.cabinets.upperQty || 0}, Lowers: {room.cabinets.lowerQty || 0}</div>
-              <div><strong>Countertops:</strong> {room.countertops.sqft || 0} sqft ({room.countertops.type || '—'})</div>
+              <div><strong>Electrical:</strong> {room.electrical.outlets || '0'} outlets, {room.electrical.switches || '0'} switches</div>
+              <div><strong>Cabinets:</strong> Uppers: {room.cabinets.upperQty || '0'}, Lowers: {room.cabinets.lowerQty || '0'}</div>
+              <div><strong>Countertops:</strong> {room.countertops.sqft || '0'} sqft ({room.countertops.type || '—'})</div>
               <div><strong>Plumbing:</strong> Tub: {room.plumbing.tub ? 'Yes' : '—'}, Sink: {room.plumbing.sink ? 'Yes' : '—'}, Toilet: {room.plumbing.toilet ? 'Yes' : '—'}</div>
             </div>
           </div>
@@ -160,8 +160,8 @@ export default function Walkthrough() {
       >+ Add Another Room</button>
 
       <details className="mt-8">
-        <summary className="cursor-pointer font-medium">🔍 Developer Preview (JSON Output)</summary>
-        <pre className="bg-gray-100 p-4 rounded mt-2 text-xs overflow-auto">
+        <summary className="cursor-pointer font-medium text-sm">🔍 Developer Preview (JSON Output)</summary>
+        <pre className="bg-gray-100 p-4 mt-2 rounded text-xs overflow-x-auto">
           {JSON.stringify({ totalSqft, rooms }, null, 2)}
         </pre>
       </details>
