@@ -35,9 +35,8 @@ const defaultRoom = {
 };
 
 export default function Walkthrough() {
-  const [rooms, setRooms] = useState([{ ...defaultRoom }]);
+  const [rooms, setRooms] = useState([defaultRoom]);
   const [totalSqft, setTotalSqft] = useState('');
-
   const addRoom = () => setRooms([...rooms, { ...defaultRoom }]);
   const removeRoom = (index) => setRooms(rooms.filter((_, i) => i !== index));
   const displayRoomTitle = (index, label) => label || `Room ${index + 1}`;
@@ -140,11 +139,11 @@ export default function Walkthrough() {
 
           <div className="mt-6">
             <h3 className="text-lg font-semibold mb-2">Trade Summary</h3>
-            <div className="grid grid-cols-2 gap-2 text-sm text-gray-800">
+            <div className="text-sm text-gray-800 space-y-1">
               <div><strong>Flooring:</strong> {room.flooring.type || '—'} ({room.flooring.area || '0'} sqft)</div>
               <div><strong>Painting:</strong> Walls: {room.painting.walls ? 'Yes' : '—'}, Cabinets: {room.painting.cabinets ? 'Yes' : '—'}</div>
-              <div><strong>Base &amp; Case:</strong> {room.baseAndCase.paint || room.baseAndCase.replace ? 'Yes' : '—'}</div>
-              <div><strong>Drywall:</strong> {room.drywall.ceilingType ? room.drywall.ceilingType : '—'}</div>
+              <div><strong>Base & Case:</strong> {room.baseAndCase.paint || room.baseAndCase.replace ? 'Yes' : '—'}</div>
+              <div><strong>Drywall:</strong> {room.drywall.drywallPatches ? 'Yes' : '—'}</div>
               <div><strong>Electrical:</strong> {room.electrical.outlets || 0} outlets, {room.electrical.switches || 0} switches</div>
               <div><strong>Cabinets:</strong> Uppers: {room.cabinets.upperQty || 0}, Lowers: {room.cabinets.lowerQty || 0}</div>
               <div><strong>Countertops:</strong> {room.countertops.sqft || 0} sqft ({room.countertops.type || '—'})</div>
@@ -159,9 +158,9 @@ export default function Walkthrough() {
         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold"
       >+ Add Another Room</button>
 
-      <details className="mt-4 text-sm text-gray-700">
-        <summary className="cursor-pointer font-medium">🔍 Developer Preview (JSON Output)</summary>
-        <pre className="bg-gray-100 p-2 mt-2 rounded overflow-x-auto">
+      <details className="mt-6">
+        <summary className="cursor-pointer font-medium text-sm">🔍 Developer Preview (JSON Output)</summary>
+        <pre className="bg-gray-100 p-4 rounded mt-2 text-sm overflow-auto">
           {JSON.stringify({ totalSqft, rooms }, null, 2)}
         </pre>
       </details>
