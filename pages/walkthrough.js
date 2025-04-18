@@ -31,7 +31,6 @@ const defaultRoom = {
     tub: false, tubDirection: '', tubSize: '', showerRod: false, toilet: false, sink: false,
     absFittings: false, copperPipe: false, shutOffs: false, absPipe: false, pTrap: false, pTrapCleanout: false, plumbingNotes: '',
   },
-  materials: []
 };
 
 export default function Walkthrough() {
@@ -60,7 +59,6 @@ export default function Walkthrough() {
       <input
         className="w-full p-2 border rounded mb-6"
         type="number"
-        min="0"
         placeholder="e.g. 1200"
         value={totalSqft}
         onChange={(e) => setTotalSqft(e.target.value)}
@@ -107,18 +105,16 @@ export default function Walkthrough() {
               <div className="flex gap-2">
                 <input
                   className="w-1/2 p-2 border rounded"
-                  type="number"
-                  min="0"
                   value={room.length}
                   placeholder="Length"
+                  type="number"
                   onChange={(e) => handleChange(index, null, 'length', e.target.value)}
                 />
                 <input
                   className="w-1/2 p-2 border rounded"
-                  type="number"
-                  min="0"
                   value={room.width}
                   placeholder="Width"
+                  type="number"
                   onChange={(e) => handleChange(index, null, 'width', e.target.value)}
                 />
               </div>
@@ -143,19 +139,44 @@ export default function Walkthrough() {
             </div>
           </div>
 
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold mb-2">Trade Sections Summary</h3>
-            <div className="grid grid-cols-2 gap-2 text-sm text-gray-800">
-              <div><strong>Flooring:</strong> {room.flooring.type || '—'} ({room.flooring.area || '0'} sq ft)</div>
-              <div><strong>Tile:</strong> Tub: {room.tile.hasTubTile ? 'Yes' : 'No'}, Backsplash: {room.tile.hasBacksplash ? 'Yes' : 'No'}, Edge: {room.tile.edge || '—'}, Color: {room.tile.tileColor || '—'}</div>
-              <div><strong>Painting:</strong> Walls: {room.painting.walls ? 'Yes' : 'No'}, Ceiling: {room.painting.ceiling ? 'Yes' : 'No'}, Sealer: {room.painting.sealerRequired ? 'Yes' : 'No'}</div>
-              <div><strong>Base & Case:</strong> Replace: {room.baseAndCase.replace ? 'Yes' : 'No'}, Material: {room.baseAndCase.material || '—'}</div>
-              <div><strong>Drywall:</strong> Patches: {room.drywall.drywallPatches ? 'Yes' : 'No'}, Mold Res: {room.drywall.moldDrywall ? 'Yes' : 'No'}, Insul: {room.drywall.insulation ? 'Yes' : 'No'}</div>
-              <div><strong>Electrical:</strong> Outlets: {room.electrical.outlets || '—'}, Smoke: {room.electrical.smokeDetector ? 'Yes' : 'No'}</div>
-              <div><strong>Cabinets:</strong> Uppers: {room.cabinets.upperQty || '0'}, Vanity: {room.cabinets.vanityQty || '—'}</div>
-              <div><strong>Countertops:</strong> {room.countertops.sqft || '0'} sq ft, {room.countertops.type || '—'}</div>
-              <div><strong>Plumbing:</strong> Tub: {room.plumbing.tub ? 'Yes' : 'No'}, Dir: {room.plumbing.tubDirection || '—'}, Shower Rod: {room.plumbing.showerRod ? 'Yes' : 'No'}</div>
-            </div>
+          <div className="mt-6 space-y-4">
+            <fieldset className="border p-4 rounded">
+              <legend className="font-bold text-lg">Flooring</legend>
+              <label className="block mb-2">Type:
+                <input className="w-full p-1 border rounded" value={room.flooring.type} onChange={(e) => handleChange(index, 'flooring', 'type', e.target.value)} />
+              </label>
+              <label className="block">Area (sq ft):
+                <input className="w-full p-1 border rounded" value={room.flooring.area} onChange={(e) => handleChange(index, 'flooring', 'area', e.target.value)} />
+              </label>
+            </fieldset>
+
+            <fieldset className="border p-4 rounded">
+              <legend className="font-bold text-lg">Tile</legend>
+              <label className="block"><input type="checkbox" checked={room.tile.hasTubTile} onChange={(e) => handleChange(index, 'tile', 'hasTubTile', e.target.checked)} /> Tub Tile</label>
+              <label className="block"><input type="checkbox" checked={room.tile.hasBacksplash} onChange={(e) => handleChange(index, 'tile', 'hasBacksplash', e.target.checked)} /> Backsplash</label>
+              <label className="block">Edge: <input className="w-full p-1 border rounded" value={room.tile.edge} onChange={(e) => handleChange(index, 'tile', 'edge', e.target.value)} /></label>
+              <label className="block">Tile Color: <input className="w-full p-1 border rounded" value={room.tile.tileColor} onChange={(e) => handleChange(index, 'tile', 'tileColor', e.target.value)} /></label>
+              <label className="block">Edge Color: <input className="w-full p-1 border rounded" value={room.tile.edgeColor} onChange={(e) => handleChange(index, 'tile', 'edgeColor', e.target.value)} /></label>
+              <label className="block">Edge Size: <input className="w-full p-1 border rounded" value={room.tile.edgeSize} onChange={(e) => handleChange(index, 'tile', 'edgeSize', e.target.value)} /></label>
+              <label className="block">Grout: <input className="w-full p-1 border rounded" value={room.tile.grout} onChange={(e) => handleChange(index, 'tile', 'grout', e.target.value)} /></label>
+              <label className="block"><input type="checkbox" checked={room.tile.groutSealer} onChange={(e) => handleChange(index, 'tile', 'groutSealer', e.target.checked)} /> Grout Sealer</label>
+            </fieldset>
+
+            <fieldset className="border p-4 rounded">
+              <legend className="font-bold text-lg">Painting</legend>
+              {['ceiling', 'walls', 'baseCase', 'cabinets', 'sealerRequired'].map((key) => (
+                <label key={key} className="block">
+                  <input
+                    type="checkbox"
+                    checked={room.painting[key]}
+                    onChange={(e) => handleChange(index, 'painting', key, e.target.checked)}
+                  /> {key.charAt(0).toUpperCase() + key.slice(1)}
+                </label>
+              ))}
+            </fieldset>
+
+            {/* Additional trade sections coming next... */}
+
           </div>
         </div>
       ))}
@@ -165,14 +186,13 @@ export default function Walkthrough() {
         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold"
       >+ Add Another Room</button>
 
-      <div className="mt-8">
-        <details>
-          <summary className="cursor-pointer font-semibold">🔍 Developer Preview (JSON Output)</summary>
-          <pre className="mt-4 bg-gray-100 p-4 rounded text-sm overflow-auto">
-            {JSON.stringify({ totalSqft, rooms }, null, 2)}
-          </pre>
-        </details>
-      </div>
+      <details className="mt-8">
+        <summary className="cursor-pointer font-semibold">🔍 Developer Preview (JSON Output)</summary>
+        <pre className="bg-gray-100 p-4 rounded text-sm overflow-auto">
+          {JSON.stringify({ totalSqft, rooms }, null, 2)}
+        </pre>
+      </details>
     </div>
   );
 }
+
