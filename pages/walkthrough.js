@@ -31,10 +31,11 @@ const defaultRoom = {
     tub: false, tubDirection: '', tubSize: '', showerRod: false, toilet: false, sink: false,
     absFittings: false, copperPipe: false, shutOffs: false, absPipe: false, pTrap: false, pTrapCleanout: false, plumbingNotes: '',
   },
+  materials: [],
 };
 
 export default function Walkthrough() {
-  const [rooms, setRooms] = useState([defaultRoom]);
+  const [rooms, setRooms] = useState([JSON.parse(JSON.stringify(defaultRoom))]);
   const [totalSqft, setTotalSqft] = useState('');
 
   const addRoom = () => setRooms([...rooms, JSON.parse(JSON.stringify(defaultRoom))]);
@@ -42,13 +43,15 @@ export default function Walkthrough() {
   const displayRoomTitle = (index, label) => label || `Room ${index + 1}`;
 
   const handleChange = (index, section, field, value) => {
-    const updated = [...rooms];
-    if (section && typeof updated[index][section] === 'object') {
-      updated[index][section][field] = value;
-    } else {
-      updated[index][field] = value;
-    }
-    setRooms(updated);
+    setRooms(prevRooms => {
+      const updated = [...prevRooms];
+      if (section && typeof updated[index][section] === 'object') {
+        updated[index][section][field] = value;
+      } else {
+        updated[index][field] = value;
+      }
+      return updated;
+    });
   };
 
   return (
@@ -139,17 +142,15 @@ export default function Walkthrough() {
 
           <div className="mt-6">
             <h3 className="text-lg font-semibold mb-2">Trade Summary</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-2 gap-2 text-sm text-gray-800">
               <div><strong>Flooring:</strong> {room.flooring.type || '—'} ({room.flooring.area || '0'} sqft)</div>
-              <div><strong>Painting:</strong> Walls: {room.painting.walls ? '✔' : '—'}, Cabinets: {room.painting.cabinets ? '✔' : '—'}</div>
-              <div><strong>Base & Case:</strong> {room.baseAndCase.replace ? 'Replace' : room.baseAndCase.paint ? 'Paint' : '—'} {room.baseAndCase.linearFeet ? `(${room.baseAndCase.linearFeet} ft)` : ''}</div>
-              <div><strong>Drywall:</strong> {room.drywall.drywallPatches ? 'Patches' : '—'}</div>
-              <div><strong>Electrical:</strong> {room.electrical.outlets || 0} outlets, {room.electrical.switches || 0} switches</div>
-              <div><strong>Cabinets:</strong> Uppers: {room.cabinets.upperQty || 0}, Lowers: {room.cabinets.lowerQty || 0}</div>
+              <div><strong>Painting:</strong> Walls: {room.painting.walls ? 'Yes' : '—'}, Cabinets: {room.painting.cabinets ? 'Yes' : '—'}</div>
+              <div><strong>Base &amp; Case:</strong> {room.baseAndCase.paint ? 'Yes' : '—'}</div>
+              <div><strong>Drywall:</strong> {room.drywall.ceilingType || '—'}</div>
+              <div><strong>Electrical:</strong> {room.electrical.outlets || '0'} outlets, {room.electrical.switches || '0'} switches</div>
+              <div><strong>Cabinets:</strong> Uppers: {room.cabinets.upperQty || '0'}, Lowers: {room.cabinets.lowerQty || '0'}</div>
               <div><strong>Countertops:</strong> {room.countertops.sqft || '0'} sqft ({room.countertops.type || '—'})</div>
-              {(room.type === 'Bathroom' || room.type === 'Kitchen') && (
-                <div><strong>Plumbing:</strong> Tub: {room.plumbing.tub ? '✔' : '—'}, Sink: {room.plumbing.sink ? '✔' : '—'}, Toilet: {room.plumbing.toilet ? '✔' : '—'}</div>
-              )}
+              <div><strong>Plumbing:</strong> Tub: {room.plumbing.tub ? 'Yes' : '—'}, Sink: {room.plumbing.sink ? 'Yes' : '—'}, Toilet: {room.plumbing.toilet ? 'Yes' : '—'}</div>
             </div>
           </div>
         </div>
