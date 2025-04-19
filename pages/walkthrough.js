@@ -147,20 +147,7 @@ export default function Walkthrough() {
             </div>
           </div>
 
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold mb-2">Trade Sections Summary</h3>
-            <div className="grid grid-cols-2 gap-2 text-sm text-gray-800">
-              <div><strong>Flooring:</strong> {room.flooring.type || '—'} ({room.flooring.area || '0'} sq ft)</div>
-              <div><strong>Tile:</strong> Tub: {room.tile.hasTubTile ? 'Yes' : 'No'}, Backsplash: {room.tile.hasBacksplash ? 'Yes' : 'No'}, Edge: {room.tile.edge || '—'}</div>
-              <div><strong>Painting:</strong> Walls: {room.painting.walls ? 'Yes' : 'No'}, Cabinets: {room.painting.cabinets ? 'Yes' : 'No'}</div>
-              <div><strong>Base & Case:</strong> Paint: {room.baseAndCase.paint ? 'Yes' : 'No'}, Replace: {room.baseAndCase.replace ? 'Yes' : 'No'}</div>
-              <div><strong>Drywall:</strong> Patches: {room.drywall.drywallPatches ? 'Yes' : 'No'}, Intercom: {room.drywall.deleteIntercom ? 'Yes' : 'No'}</div>
-              <div><strong>Electrical:</strong> Outlets: {room.electrical.outlets || '—'}, Switches: {room.electrical.switches || '—'}</div>
-              <div><strong>Cabinets:</strong> Uppers: {room.cabinets.upperQty || '0'}, Lowers: {room.cabinets.lowerQty || '0'}</div>
-              <div><strong>Countertops:</strong> {room.countertops.sqft || '0'} sq ft, {room.countertops.type || '—'}</div>
-              <div><strong>Plumbing:</strong> Tub: {room.plumbing.tub ? 'Yes' : 'No'}, Toilet: {room.plumbing.toilet ? 'Yes' : 'No'}, Sink: {room.plumbing.sink ? 'Yes' : 'No'}</div>
-            </div>
-          </div>
+          {/* Inputs for each trade will be inserted below here in next updates */}
         </div>
       ))}
 
