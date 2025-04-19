@@ -56,23 +56,28 @@ export default function Walkthrough() {
     <div className="max-w-6xl mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Step 2: Room-by-Room Walkthrough</h1>
 
-      <label className="block font-semibold mb-1">Total Project Square Footage:</label>
-      <input
-        className="w-full p-2 border rounded mb-4"
-        type="text"
-        placeholder="e.g. 1200"
-        value={totalSqft}
-        onChange={(e) => setTotalSqft(e.target.value)}
-      />
-
-      <label className="block font-semibold mb-1">Quote Hourly Rate ($/hr):</label>
-      <input
-        className="w-full p-2 border rounded mb-6"
-        type="number"
-        min="0"
-        value={quoteHourlyRate}
-        onChange={(e) => setQuoteHourlyRate(e.target.value)}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label className="block font-semibold mb-1">Total Project Square Footage:</label>
+          <input
+            className="w-full p-2 border rounded"
+            type="text"
+            placeholder="e.g. 1200"
+            value={totalSqft}
+            onChange={(e) => setTotalSqft(e.target.value)}
+          />
+        </div>
+        <div>
+          <label className="block font-semibold mb-1">Quote Hourly Rate ($/hr):</label>
+          <input
+            className="w-full p-2 border rounded"
+            type="number"
+            min="0"
+            value={quoteHourlyRate}
+            onChange={(e) => setQuoteHourlyRate(e.target.value)}
+          />
+        </div>
+      </div>
 
       {rooms.map((room, index) => (
         <div key={index} className="border p-4 rounded shadow mb-8">
@@ -147,7 +152,30 @@ export default function Walkthrough() {
             </div>
           </div>
 
-          {/* Inputs for each trade will be inserted below here in next updates */}
+          <div className="mt-6">
+            <p className="text-lg font-semibold">Trade Sections</p>
+
+            <div className="mt-2">
+              <label className="block font-medium">Flooring Type</label>
+              <input
+                className="w-full p-2 border rounded"
+                value={room.flooring.type}
+                placeholder="e.g. LVP, Tile, Carpet"
+                onChange={(e) => handleChange(index, 'flooring', 'type', e.target.value)}
+              />
+            </div>
+
+            <div className="mt-2">
+              <label className="block font-medium">Flooring Area (sqft)</label>
+              <input
+                className="w-full p-2 border rounded"
+                type="number"
+                value={room.flooring.area}
+                placeholder="e.g. 125"
+                onChange={(e) => handleChange(index, 'flooring', 'area', e.target.value)}
+              />
+            </div>
+          </div>
         </div>
       ))}
 
