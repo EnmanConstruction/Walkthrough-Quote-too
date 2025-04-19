@@ -31,12 +31,13 @@ const defaultRoom = {
     tub: false, tubDirection: '', tubSize: '', showerRod: false, toilet: false, sink: false,
     absFittings: false, copperPipe: false, shutOffs: false, absPipe: false, pTrap: false, pTrapCleanout: false, plumbingNotes: '',
   },
-  materials: [],
 };
 
 export default function Walkthrough() {
   const [rooms, setRooms] = useState([defaultRoom]);
   const [totalSqft, setTotalSqft] = useState('');
+  const [quoteHourlyRate, setQuoteHourlyRate] = useState('120');
+
   const addRoom = () => setRooms([...rooms, { ...defaultRoom }]);
   const removeRoom = (index) => setRooms(rooms.filter((_, i) => i !== index));
   const displayRoomTitle = (index, label) => label || `Room ${index + 1}`;
@@ -57,11 +58,20 @@ export default function Walkthrough() {
 
       <label className="block font-semibold mb-1">Total Project Square Footage:</label>
       <input
-        className="w-full p-2 border rounded mb-6"
+        className="w-full p-2 border rounded mb-4"
         type="text"
         placeholder="e.g. 1200"
         value={totalSqft}
         onChange={(e) => setTotalSqft(e.target.value)}
+      />
+
+      <label className="block font-semibold mb-1">Quote Hourly Rate ($/hr):</label>
+      <input
+        className="w-full p-2 border rounded mb-6"
+        type="number"
+        min="0"
+        value={quoteHourlyRate}
+        onChange={(e) => setQuoteHourlyRate(e.target.value)}
       />
 
       {rooms.map((room, index) => (
@@ -138,16 +148,17 @@ export default function Walkthrough() {
           </div>
 
           <div className="mt-6">
-            <h3 className="text-lg font-semibold mb-2">Trade Summary</h3>
-            <div className="text-sm text-gray-800 space-y-1">
-              <div><strong>Flooring:</strong> {room.flooring.type || '—'} ({room.flooring.area || '0'} sqft)</div>
-              <div><strong>Painting:</strong> Walls: {room.painting.walls ? 'Yes' : '—'}, Cabinets: {room.painting.cabinets ? 'Yes' : '—'}</div>
-              <div><strong>Base & Case:</strong> {room.baseAndCase.paint || room.baseAndCase.replace ? 'Yes' : '—'}</div>
-              <div><strong>Drywall:</strong> {room.drywall.drywallPatches ? 'Yes' : '—'}</div>
-              <div><strong>Electrical:</strong> {room.electrical.outlets || 0} outlets, {room.electrical.switches || 0} switches</div>
-              <div><strong>Cabinets:</strong> Uppers: {room.cabinets.upperQty || 0}, Lowers: {room.cabinets.lowerQty || 0}</div>
-              <div><strong>Countertops:</strong> {room.countertops.sqft || 0} sqft ({room.countertops.type || '—'})</div>
-              <div><strong>Plumbing:</strong> Tub: {room.plumbing.tub ? 'Yes' : '—'}, Sink: {room.plumbing.sink ? 'Yes' : '—'}, Toilet: {room.plumbing.toilet ? 'Yes' : '—'}</div>
+            <h3 className="text-lg font-semibold mb-2">Trade Sections Summary</h3>
+            <div className="grid grid-cols-2 gap-2 text-sm text-gray-800">
+              <div><strong>Flooring:</strong> {room.flooring.type || '—'} ({room.flooring.area || '0'} sq ft)</div>
+              <div><strong>Tile:</strong> Tub: {room.tile.hasTubTile ? 'Yes' : 'No'}, Backsplash: {room.tile.hasBacksplash ? 'Yes' : 'No'}, Edge: {room.tile.edge || '—'}</div>
+              <div><strong>Painting:</strong> Walls: {room.painting.walls ? 'Yes' : 'No'}, Cabinets: {room.painting.cabinets ? 'Yes' : 'No'}</div>
+              <div><strong>Base & Case:</strong> Paint: {room.baseAndCase.paint ? 'Yes' : 'No'}, Replace: {room.baseAndCase.replace ? 'Yes' : 'No'}</div>
+              <div><strong>Drywall:</strong> Patches: {room.drywall.drywallPatches ? 'Yes' : 'No'}, Intercom: {room.drywall.deleteIntercom ? 'Yes' : 'No'}</div>
+              <div><strong>Electrical:</strong> Outlets: {room.electrical.outlets || '—'}, Switches: {room.electrical.switches || '—'}</div>
+              <div><strong>Cabinets:</strong> Uppers: {room.cabinets.upperQty || '0'}, Lowers: {room.cabinets.lowerQty || '0'}</div>
+              <div><strong>Countertops:</strong> {room.countertops.sqft || '0'} sq ft, {room.countertops.type || '—'}</div>
+              <div><strong>Plumbing:</strong> Tub: {room.plumbing.tub ? 'Yes' : 'No'}, Toilet: {room.plumbing.toilet ? 'Yes' : 'No'}, Sink: {room.plumbing.sink ? 'Yes' : 'No'}</div>
             </div>
           </div>
         </div>
@@ -157,13 +168,6 @@ export default function Walkthrough() {
         onClick={addRoom}
         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold"
       >+ Add Another Room</button>
-
-      <details className="mt-6">
-        <summary className="cursor-pointer font-medium text-sm">🔍 Developer Preview (JSON Output)</summary>
-        <pre className="bg-gray-100 p-4 rounded mt-2 text-sm overflow-auto">
-          {JSON.stringify({ totalSqft, rooms }, null, 2)}
-        </pre>
-      </details>
     </div>
   );
 }
