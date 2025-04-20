@@ -175,6 +175,16 @@ export default function Walkthrough() {
                 onChange={(e) => handleChange(index, 'flooring', 'area', e.target.value)}
               />
             </div>
+
+            {/* Additional Trade Fields Start Here */}
+            <div className="mt-4">
+              <label className="block font-medium">Wall Paint?</label>
+              <input
+                type="checkbox"
+                checked={room.painting.walls}
+                onChange={(e) => handleChange(index, 'painting', 'walls', e.target.checked)}
+              />
+            </div>
           </div>
         </div>
       ))}
@@ -186,3 +196,4 @@ export default function Walkthrough() {
     </div>
   );
 }
+
