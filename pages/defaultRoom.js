@@ -1,3 +1,15 @@
+includeTrades: {
+  flooring: true,
+  tile: true,
+  painting: true,
+  baseAndCase: true,
+  drywall: true,
+  electrical: true,
+  cabinets: true,
+  countertops: true,
+  plumbing: true,
+}
+
 const defaultRoom = {
   label: '',
   type: 'Bathroom',
