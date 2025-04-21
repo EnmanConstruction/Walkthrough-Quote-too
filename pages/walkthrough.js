@@ -61,7 +61,6 @@ export default function Walkthrough() {
               checked={room.tile.hasTubTile}
               onChange={(e) => handleTradeChange(index, 'tile', 'hasTubTile', e.target.checked)}
             />
-            <br />
             <label>Has Backsplash?</label>
             <input
               type="checkbox"
@@ -101,6 +100,40 @@ export default function Walkthrough() {
               type="checkbox"
               checked={room.plumbing.sink}
               onChange={(e) => handleTradeChange(index, 'plumbing', 'sink', e.target.checked)}
+            />
+          </div>
+        )}
+
+        {room.includeTrades.electrical && (
+          <div>
+            <label>Outlets</label>
+            <input
+              type="number"
+              value={room.electrical.outlets}
+              onChange={(e) => handleTradeChange(index, 'electrical', 'outlets', e.target.value)}
+            />
+            <label> Switches</label>
+            <input
+              type="number"
+              value={room.electrical.switches}
+              onChange={(e) => handleTradeChange(index, 'electrical', 'switches', e.target.value)}
+            />
+          </div>
+        )}
+
+        {room.includeTrades.cabinets && (
+          <div>
+            <label>Upper Cabinets</label>
+            <input
+              type="number"
+              value={room.cabinets.uppers}
+              onChange={(e) => handleTradeChange(index, 'cabinets', 'uppers', e.target.value)}
+            />
+            <label> Lower Cabinets</label>
+            <input
+              type="number"
+              value={room.cabinets.lowers}
+              onChange={(e) => handleTradeChange(index, 'cabinets', 'lowers', e.target.value)}
             />
           </div>
         )}
