@@ -188,6 +188,7 @@ export default function Walkthrough() {
             />
           </div>
 
+          {/* 🔥 This is the key fix */}
           {renderTradeInputs(room, index)}
         </div>
       ))}
