@@ -53,6 +53,24 @@ export default function Walkthrough() {
           </div>
         )}
 
+        {room.includeTrades.tile && (
+          <div>
+            <label>Has Tub Tile?</label>
+            <input
+              type="checkbox"
+              checked={room.tile.hasTubTile}
+              onChange={(e) => handleTradeChange(index, 'tile', 'hasTubTile', e.target.checked)}
+            />
+            <br />
+            <label>Has Backsplash?</label>
+            <input
+              type="checkbox"
+              checked={room.tile.hasBacksplash}
+              onChange={(e) => handleTradeChange(index, 'tile', 'hasBacksplash', e.target.checked)}
+            />
+          </div>
+        )}
+
         {room.includeTrades.painting && (
           <div>
             <label>Wall Paint?</label>
@@ -60,6 +78,29 @@ export default function Walkthrough() {
               type="checkbox"
               checked={room.painting.walls}
               onChange={(e) => handleTradeChange(index, 'painting', 'walls', e.target.checked)}
+            />
+          </div>
+        )}
+
+        {room.includeTrades.plumbing && (
+          <div>
+            <label>Plumbing - Tub:</label>
+            <input
+              type="checkbox"
+              checked={room.plumbing.tub}
+              onChange={(e) => handleTradeChange(index, 'plumbing', 'tub', e.target.checked)}
+            />
+            <label> Toilet:</label>
+            <input
+              type="checkbox"
+              checked={room.plumbing.toilet}
+              onChange={(e) => handleTradeChange(index, 'plumbing', 'toilet', e.target.checked)}
+            />
+            <label> Sink:</label>
+            <input
+              type="checkbox"
+              checked={room.plumbing.sink}
+              onChange={(e) => handleTradeChange(index, 'plumbing', 'sink', e.target.checked)}
             />
           </div>
         )}
