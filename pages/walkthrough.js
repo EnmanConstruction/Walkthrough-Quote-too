@@ -1,3 +1,4 @@
+
 import defaultRoom from './defaultRoom';
 import { useState } from 'react';
 
@@ -188,7 +189,6 @@ export default function Walkthrough() {
             />
           </div>
 
-          {/* 🔥 This is the key fix */}
           {renderTradeInputs(room, index)}
         </div>
       ))}
