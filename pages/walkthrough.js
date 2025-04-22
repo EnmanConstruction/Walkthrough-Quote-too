@@ -1,5 +1,5 @@
 
-import defaultRoom from './defaultRoom';
+import defaultRoom from '../lib/defaultRoom';
 import { useState } from 'react';
 
 export default function Walkthrough() {
