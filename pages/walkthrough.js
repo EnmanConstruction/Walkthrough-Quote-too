@@ -38,40 +38,56 @@ export default function Walkthrough() {
   const renderTradeInputs = (room, index) => (
     <div>
       <h4>Trade Sections</h4>
+
       {room.includeTrades.flooring && (
         <div>
           {renderInput("Flooring Type", room.flooring.type, e => handleTradeChange(index, 'flooring', 'type', e.target.value))}
           {renderInput("Flooring Area (sqft)", room.flooring.area, e => handleTradeChange(index, 'flooring', 'area', e.target.value))}
         </div>
       )}
+
       {room.includeTrades.tile && (
         <div>
           {renderCheckbox("Has Tub Tile?", room.tile.hasTubTile, e => handleTradeChange(index, 'tile', 'hasTubTile', e.target.checked))}
           {renderCheckbox("Has Backsplash?", room.tile.hasBacksplash, e => handleTradeChange(index, 'tile', 'hasBacksplash', e.target.checked))}
           {renderInput("Tile Edge", room.tile.edge, e => handleTradeChange(index, 'tile', 'edge', e.target.value))}
+          {renderInput("Tile Color", room.tile.tileColor, e => handleTradeChange(index, 'tile', 'tileColor', e.target.value))}
+          {renderInput("Edge Color", room.tile.edgeColor, e => handleTradeChange(index, 'tile', 'edgeColor', e.target.value))}
+          {renderInput("Edge Size", room.tile.edgeSize, e => handleTradeChange(index, 'tile', 'edgeSize', e.target.value))}
+          {renderInput("Grout", room.tile.grout, e => handleTradeChange(index, 'tile', 'grout', e.target.value))}
+          {renderCheckbox("Grout Sealer", room.tile.groutSealer, e => handleTradeChange(index, 'tile', 'groutSealer', e.target.checked))}
         </div>
       )}
+
       {room.includeTrades.painting && (
         <div>
           {renderCheckbox("Ceiling Paint?", room.painting.ceiling, e => handleTradeChange(index, 'painting', 'ceiling', e.target.checked))}
           {renderCheckbox("Wall Paint?", room.painting.walls, e => handleTradeChange(index, 'painting', 'walls', e.target.checked))}
+          {renderCheckbox("Cabinet Paint?", room.painting.cabinets, e => handleTradeChange(index, 'painting', 'cabinets', e.target.checked))}
           {renderCheckbox("Sealer Required?", room.painting.sealerRequired, e => handleTradeChange(index, 'painting', 'sealerRequired', e.target.checked))}
         </div>
       )}
+
       {room.includeTrades.baseAndCase && (
         <div>
           {renderCheckbox("Paint Base/Casing?", room.baseAndCase.paint, e => handleTradeChange(index, 'baseAndCase', 'paint', e.target.checked))}
           {renderCheckbox("Replace Base/Casing?", room.baseAndCase.replace, e => handleTradeChange(index, 'baseAndCase', 'replace', e.target.checked))}
           {renderInput("Linear Feet", room.baseAndCase.linearFeet, e => handleTradeChange(index, 'baseAndCase', 'linearFeet', e.target.value))}
+          {renderInput("Material", room.baseAndCase.material, e => handleTradeChange(index, 'baseAndCase', 'material', e.target.value))}
         </div>
       )}
+
       {room.includeTrades.drywall && (
         <div>
           {renderInput("Ceiling Type", room.drywall.ceilingType, e => handleTradeChange(index, 'drywall', 'ceilingType', e.target.value))}
-          {renderCheckbox("Mold Resistant?", room.drywall.moldDrywall, e => handleTradeChange(index, 'drywall', 'moldDrywall', e.target.checked))}
-          {renderCheckbox("Drywall Patches?", room.drywall.drywallPatches, e => handleTradeChange(index, 'drywall', 'drywallPatches', e.target.checked))}
+          {renderCheckbox("Drywall Patches", room.drywall.drywallPatches, e => handleTradeChange(index, 'drywall', 'drywallPatches', e.target.checked))}
+          {renderCheckbox("Mold-Resistant Drywall", room.drywall.moldDrywall, e => handleTradeChange(index, 'drywall', 'moldDrywall', e.target.checked))}
+          {renderCheckbox("Insulation", room.drywall.insulation, e => handleTradeChange(index, 'drywall', 'insulation', e.target.checked))}
+          {renderCheckbox("Delete Intercom", room.drywall.deleteIntercom, e => handleTradeChange(index, 'drywall', 'deleteIntercom', e.target.checked))}
+          {renderCheckbox("Backing Required", room.drywall.backingRequired, e => handleTradeChange(index, 'drywall', 'backingRequired', e.target.checked))}
         </div>
       )}
+
       {room.includeTrades.electrical && (
         <div>
           {renderInput("Outlets", room.electrical.outlets, e => handleTradeChange(index, 'electrical', 'outlets', e.target.value))}
@@ -79,48 +95,40 @@ export default function Walkthrough() {
           {renderCheckbox("Panel Upgrade?", room.electrical.panelUpgradeRequired, e => handleTradeChange(index, 'electrical', 'panelUpgradeRequired', e.target.checked))}
         </div>
       )}
+
       {room.includeTrades.cabinets && (
         <div>
           {renderInput("Uppers", room.cabinets.upperQty, e => handleTradeChange(index, 'cabinets', 'upperQty', e.target.value))}
           {renderInput("Lowers", room.cabinets.lowerQty, e => handleTradeChange(index, 'cabinets', 'lowerQty', e.target.value))}
-          {renderCheckbox("Soft Close?", room.cabinets.softClose, e => handleTradeChange(index, 'cabinets', 'softClose', e.target.checked))}
+          {renderInput("Vanity Qty", room.cabinets.vanityQty, e => handleTradeChange(index, 'cabinets', 'vanityQty', e.target.value))}
+          {renderCheckbox("Soft Close", room.cabinets.softClose, e => handleTradeChange(index, 'cabinets', 'softClose', e.target.checked))}
         </div>
       )}
+
       {room.includeTrades.countertops && (
         <div>
-          {renderInput("Sq Ft", room.countertops.sqft, e => handleTradeChange(index, 'countertops', 'sqft', e.target.value))}
-          {renderInput("Countertop Type", room.countertops.type, e => handleTradeChange(index, 'countertops', 'type', e.target.value))}
+          {renderInput("Sqft", room.countertops.sqft, e => handleTradeChange(index, 'countertops', 'sqft', e.target.value))}
+          {renderInput("Type", room.countertops.type, e => handleTradeChange(index, 'countertops', 'type', e.target.value))}
         </div>
       )}
+
       {room.includeTrades.plumbing && (
         <div>
           {renderCheckbox("Tub", room.plumbing.tub, e => handleTradeChange(index, 'plumbing', 'tub', e.target.checked))}
-          {renderCheckbox("Toilet", room.plumbing.toilet, e => handleTradeChange(index, 'plumbing', 'toilet', e.target.checked))}
-          {renderCheckbox("Sink", room.plumbing.sink, e => handleTradeChange(index, 'plumbing', 'sink', e.target.checked))}
-        </div>
-      )}
-      {room.includeTrades.doors && (
-        <div>
-          {renderInput("Door Type", room.doors.type, e => handleTradeChange(index, 'doors', 'type', e.target.value))}
-          {renderInput("Quantity", room.doors.count, e => handleTradeChange(index, 'doors', 'count', e.target.value))}
-        </div>
-      )}
-      {room.includeTrades.windows && (
-        <div>
-          {renderInput("Window Qty", room.windows.quantity, e => handleTradeChange(index, 'windows', 'quantity', e.target.value))}
-          {renderCheckbox("EGRESS Required?", room.windows.egressRequired, e => handleTradeChange(index, 'windows', 'egressRequired', e.target.checked))}
-        </div>
-      )}
-      {room.includeTrades.insulation && (
-        <div>
-          {renderCheckbox("Ceiling Insulation?", room.insulation.ceiling, e => handleTradeChange(index, 'insulation', 'ceiling', e.target.checked))}
-          {renderCheckbox("Walls Insulation?", room.insulation.walls, e => handleTradeChange(index, 'insulation', 'walls', e.target.checked))}
-        </div>
-      )}
-      {room.includeTrades.miscellaneous && (
-        <div>
-          {renderCheckbox("Fire Caulking?", room.miscellaneous.fireCaulking, e => handleTradeChange(index, 'miscellaneous', 'fireCaulking', e.target.checked))}
-          {renderInput("Code Notes", room.miscellaneous.codeNotes, e => handleTradeChange(index, 'miscellaneous', 'codeNotes', e.target.value))}
+          {room.plumbing.tub && (
+            <div style={{ marginLeft: '20px' }}>
+              {renderInput("Tub Direction", room.plumbing.tubDirection, e => handleTradeChange(index, 'plumbing', 'tubDirection', e.target.value))}
+              {renderInput("Tub Size", room.plumbing.tubSize, e => handleTradeChange(index, 'plumbing', 'tubSize', e.target.value))}
+              {renderCheckbox("Shower Rod", room.plumbing.showerRod, e => handleTradeChange(index, 'plumbing', 'showerRod', e.target.checked))}
+              {renderCheckbox("ABS Fittings", room.plumbing.absFittings, e => handleTradeChange(index, 'plumbing', 'absFittings', e.target.checked))}
+              {renderCheckbox("Copper Pipe", room.plumbing.copperPipe, e => handleTradeChange(index, 'plumbing', 'copperPipe', e.target.checked))}
+              {renderCheckbox("Shut-Offs", room.plumbing.shutOffs, e => handleTradeChange(index, 'plumbing', 'shutOffs', e.target.checked))}
+              {renderCheckbox("ABS Pipe", room.plumbing.absPipe, e => handleTradeChange(index, 'plumbing', 'absPipe', e.target.checked))}
+              {renderCheckbox("P-Trap", room.plumbing.pTrap, e => handleTradeChange(index, 'plumbing', 'pTrap', e.target.checked))}
+              {renderCheckbox("P-Trap w/ Cleanout", room.plumbing.pTrapCleanout, e => handleTradeChange(index, 'plumbing', 'pTrapCleanout', e.target.checked))}
+              {renderInput("Plumbing Notes", room.plumbing.plumbingNotes, e => handleTradeChange(index, 'plumbing', 'plumbingNotes', e.target.value))}
+            </div>
+          )}
         </div>
       )}
     </div>
