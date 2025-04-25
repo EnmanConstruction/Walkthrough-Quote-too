@@ -1,24 +1,21 @@
 
-// âœ… FINAL WALKTHROUGH.JS â€” Full Conditional Logic + Grouping (MAC Friendly Version)
-// Paste this into /pages/walkthrough.js in your project
+// âœ… FIELD-FIRST WALKTHROUGH.JS (Full Code)
 
 import defaultRoom from '../lib/defaultRoom';
 import { useState } from 'react';
 
 export default function Walkthrough() {
-  const [totalSqft, setTotalSqft] = useState('');
-  const [hourlyRate, setHourlyRate] = useState(120);
   const [rooms, setRooms] = useState([{ ...defaultRoom }]);
 
-  const handleRoomChange = (index, field, value) => {
+  const handleChange = (index, section, field, value) => {
     const updated = [...rooms];
-    updated[index][field] = value;
+    updated[index][section][field] = value;
     setRooms(updated);
   };
 
-  const handleTradeChange = (index, trade, field, value) => {
+  const handleNested = (index, section, group, field, value) => {
     const updated = [...rooms];
-    updated[index][trade][field] = value;
+    updated[index][section][group][field] = value;
     setRooms(updated);
   };
 
@@ -37,7 +34,7 @@ export default function Walkthrough() {
   );
 
   const renderCheckbox = (label, checked, onChange) => (
-    <div style={{ marginBottom: '8px' }}>
+    <div style={{ marginBottom: '6px' }}>
       <label>
         <input type="checkbox" checked={checked} onChange={onChange} /> {label}
       </label>
@@ -51,63 +48,44 @@ export default function Walkthrough() {
     </div>
   );
 
-  const renderTradeInputs = (room, index) => (
-    <div>
-      {room.includeTrades.flooring && (
-        <Section title="Flooring">
-          {renderInput("Type", room.flooring.type, e => handleTradeChange(index, 'flooring', 'type', e.target.value))}
-          {renderInput("Area (sqft)", room.flooring.area, e => handleTradeChange(index, 'flooring', 'area', e.target.value))}
-        </Section>
-      )}
-
-      {room.includeTrades.tile && (
-        <Section title="Tile">
-          {renderCheckbox("Tub Tile", room.tile.hasTubTile, e => handleTradeChange(index, 'tile', 'hasTubTile', e.target.checked))}
-          {renderCheckbox("Backsplash", room.tile.hasBacksplash, e => handleTradeChange(index, 'tile', 'hasBacksplash', e.target.checked))}
-          {(room.tile.hasTubTile || room.tile.hasBacksplash) && (
-            <>
-              {renderInput("Edge", room.tile.edge, e => handleTradeChange(index, 'tile', 'edge', e.target.value))}
-              {renderInput("Tile Color", room.tile.tileColor, e => handleTradeChange(index, 'tile', 'tileColor', e.target.value))}
-              {renderInput("Edge Color", room.tile.edgeColor, e => handleTradeChange(index, 'tile', 'edgeColor', e.target.value))}
-              {renderInput("Edge Size", room.tile.edgeSize, e => handleTradeChange(index, 'tile', 'edgeSize', e.target.value))}
-              {renderInput("Grout", room.tile.grout, e => handleTradeChange(index, 'tile', 'grout', e.target.value))}
-              {renderCheckbox("Grout Sealer", room.tile.groutSealer, e => handleTradeChange(index, 'tile', 'groutSealer', e.target.checked))}
-            </>
-          )}
-        </Section>
-      )}
-
-      {room.includeTrades.painting && (
-        <Section title="Painting">
-          {renderCheckbox("Ceiling", room.painting.ceiling, e => handleTradeChange(index, 'painting', 'ceiling', e.target.checked))}
-          {renderCheckbox("Walls", room.painting.walls, e => handleTradeChange(index, 'painting', 'walls', e.target.checked))}
-          {renderCheckbox("Base/Case", room.painting.baseCase, e => handleTradeChange(index, 'painting', 'baseCase', e.target.checked))}
-          {renderCheckbox("Cabinets", room.painting.cabinets, e => handleTradeChange(index, 'painting', 'cabinets', e.target.checked))}
-          {renderCheckbox("Sealer Required", room.painting.sealerRequired, e => handleTradeChange(index, 'painting', 'sealerRequired', e.target.checked))}
-        </Section>
-      )}
-    </div>
-  );
-
   return (
     <div>
-      <h1>Step 2: Room-by-Room Walkthrough</h1>
-      {renderInput("Total Sqft", totalSqft, e => setTotalSqft(e.target.value))}
-      {renderInput("Hourly Rate", hourlyRate, e => setHourlyRate(e.target.value), 'number')}
-
+      <h1>Field-First Walkthrough</h1>
       {rooms.map((room, index) => (
-        <div key={index} style={{ border: '2px solid black', margin: '20px 0', padding: '10px' }}>
+        <div key={index} style={{ margin: '30px 0', border: '2px solid black', padding: '15px' }}>
           <h2>Room {index + 1}</h2>
           <button onClick={() => removeRoom(index)}>Remove</button>
-          {renderInput("Label", room.label, e => handleRoomChange(index, 'label', e.target.value))}
-          {renderInput("Length (ft)", room.length, e => handleRoomChange(index, 'length', e.target.value))}
-          {renderInput("Width (ft)", room.width, e => handleRoomChange(index, 'width', e.target.value))}
-          {renderInput("Notes", room.notes, e => handleRoomChange(index, 'notes', e.target.value))}
-          {renderTradeInputs(room, index)}
+
+          {renderInput("Room Label", room.label, e => handleChange(index, '', 'label', e.target.value))}
+          {renderInput("Room Type", room.type, e => handleChange(index, '', 'type', e.target.value))}
+          {renderInput("Notes", room.notes, e => handleChange(index, '', 'notes', e.target.value))}
+
+          <Section title="Measurements">
+            {renderInput("Length (ft)", room.measurements.length, e => handleChange(index, 'measurements', 'length', e.target.value))}
+            {renderInput("Width (ft)", room.measurements.width, e => handleChange(index, 'measurements', 'width', e.target.value))}
+            {renderInput("Ceiling Height (ft)", room.measurements.ceilingHeight, e => handleChange(index, 'measurements', 'ceilingHeight', e.target.value))}
+            {renderInput("Total Sqft", room.measurements.sqft, e => handleChange(index, 'measurements', 'sqft', e.target.value))}
+            {renderInput("Baseboard LF", room.measurements.baseLF, e => handleChange(index, 'measurements', 'baseLF', e.target.value))}
+            {renderInput("Casing LF", room.measurements.caseLF, e => handleChange(index, 'measurements', 'caseLF', e.target.value))}
+            {renderInput("Tile Edge LF", room.measurements.tileLF, e => handleChange(index, 'measurements', 'tileLF', e.target.value))}
+            {renderInput("Cabinet LF", room.measurements.cabinetLF, e => handleChange(index, 'measurements', 'cabinetLF', e.target.value))}
+          </Section>
+
+          <Section title="Counts">
+            {renderInput("Windows", room.counts.windows, e => handleChange(index, 'counts', 'windows', e.target.value))}
+            {renderInput("Doors", room.counts.doors, e => handleChange(index, 'counts', 'doors', e.target.value))}
+            {renderInput("Outlets", room.counts.outlets, e => handleChange(index, 'counts', 'outlets', e.target.value))}
+            {renderInput("Switches", room.counts.switches, e => handleChange(index, 'counts', 'switches', e.target.value))}
+            {renderInput("Lights", room.counts.lights, e => handleChange(index, 'counts', 'lights', e.target.value))}
+            {renderInput("Smoke Detectors", room.counts.smokeDetectors, e => handleChange(index, 'counts', 'smokeDetectors', e.target.value))}
+
+            {renderCheckbox("Tub", room.counts.fixtures.tub, e => handleNested(index, 'counts', 'fixtures', 'tub', e.target.checked))}
+            {renderCheckbox("Toilet", room.counts.fixtures.toilet, e => handleNested(index, 'counts', 'fixtures', 'toilet', e.target.checked))}
+            {renderCheckbox("Sink", room.counts.fixtures.sink, e => handleNested(index, 'counts', 'fixtures', 'sink', e.target.checked))}
+          </Section>
         </div>
       ))}
-
-      <button onClick={addRoom}>+ Add Another Room</button>
+      <button onClick={addRoom}>+ Add Room</button>
     </div>
   );
 }
